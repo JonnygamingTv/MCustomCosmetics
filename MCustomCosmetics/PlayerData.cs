@@ -80,7 +80,7 @@ namespace MCustomCosmetics
 
         public void Save(T obj)
         {
-            string objData = JsonConvert.SerializeObject(obj, Formatting.Indented);
+            string objData = JsonConvert.SerializeObject(obj, Formatting.None);
 
             using (StreamWriter stream = new StreamWriter(DataPath, false))
             {
