@@ -80,9 +80,10 @@ namespace MCustomCosmetics
                     break;
                 default:
                     var search = command[0];
-                    var econInfos = TempSteamworksEconomy.econInfo;
+                    var econInfoField = typeof(SDG.Provider.TempSteamworksEconomy).GetField("econInfo", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic);
+                    var econInfos = econInfoField.GetValue(null) as Dictionary<int, UnturnedEconInfo>;
                     UnturnedEconInfo cosmetic;
-                    cosmetic = int.TryParse(search, out int searchId) ? econInfos.FirstOrDefault(x => x.itemdefid == searchId) : econInfos.FirstOrDefault(x => x.name.ToLower().Contains(search.ToLower()));
+                    if (int.TryParse(search, out int searchId)) econInfos.TryGetValue(searchId, out cosmetic); else cosmetic = econInfos.Values.FirstOrDefault(x => x.name.ToLower().Contains(search.ToLower()));
                     if (cosmetic == null)
                     {
                         UnturnedChat.Say(caller, "Cosmetic id " + search + " not found!", color);

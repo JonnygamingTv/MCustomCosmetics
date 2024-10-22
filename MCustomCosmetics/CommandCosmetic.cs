@@ -71,9 +71,10 @@ namespace MCustomCosmetics
                 return;
             }
             var search = command[0];
-            var econInfos = TempSteamworksEconomy.econInfo;
+            var econInfoField = typeof(SDG.Provider.TempSteamworksEconomy).GetField("econInfo", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic);
+            var econInfos = econInfoField.GetValue(null) as Dictionary<int, UnturnedEconInfo>;
             UnturnedEconInfo cosmetic;
-            cosmetic = int.TryParse(search, out int searchId) ? econInfos.FirstOrDefault(x => x.itemdefid == searchId) : econInfos.FirstOrDefault(x => x.name.ToLower().Contains(search.ToLower()));
+            if (int.TryParse(search, out int searchId)) econInfos.TryGetValue(searchId, out cosmetic); else cosmetic = econInfos.Values.FirstOrDefault(x => x.name.ToLower().Contains(search.ToLower()));
 
             if (cosmetic == null)
             {
@@ -110,7 +111,7 @@ namespace MCustomCosmetics
 
         public string AddCosmetic(UnturnedEconInfo info, ulong id, string mythic)
         {
-            var type = info.type.ToLower();
+            var type = info.display_type.ToLower();
             if (type.Contains("backpack"))
             {
                 MCustomCosmetics.Instance.pData.data[id].Outfits[MCustomCosmetics.Instance.pData.data[id].SelectedFit].Backpack = info.itemdefid;
