@@ -10,6 +10,7 @@ using SDG.Unturned;
 using Steamworks;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,8 +22,9 @@ namespace MCustomCosmetics
     {
         public static MCustomCosmetics Instance { get; set; }
         public Dictionary<string, string> mythics;
-        public PlayerData pData;
         public Dictionary<ulong, bool> globalCos;
+        public static Dictionary<int, UnturnedEconInfo> EconInfo;
+        public PlayerData pData;
         public UnityEngine.Color MessageColor { get; set; }
         public override TranslationList DefaultTranslations => new TranslationList()
         {
@@ -131,6 +133,7 @@ namespace MCustomCosmetics
             Rocket.Core.Logging.Logger.Log($"Permissions are the command names!");
             Rocket.Core.Logging.Logger.Log($"Bypass outfit permission is \'OutfitBypassLimit\'");
             Rocket.Core.Logging.Logger.Log($"Saving outfit permission is \'CosmeticsAllowSaving\'");
+            LoadEcon();
         }
 
         protected override void Unload()
@@ -147,6 +150,47 @@ namespace MCustomCosmetics
             }
             pData.CommitToFile();
             Patches.UnpatchAll();
+        }
+
+        void LoadEcon()
+        {
+            string path = Path.Combine(UnturnedPaths.RootDirectory.FullName, "EconInfo.bin");
+            EconInfo = new Dictionary<int, UnturnedEconInfo>();
+            try
+            {
+                using (FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
+                {
+                    using (SHA1Stream sha1Stream = new SHA1Stream(fileStream))
+                    {
+                        using (BinaryReader binaryReader = new BinaryReader(fileStream))
+                        {
+                            binaryReader.ReadInt32();
+                            int num = binaryReader.ReadInt32();
+                            for (int i = 0; i < num; i++)
+                            {
+                                UnturnedEconInfo unturnedEconInfo = new UnturnedEconInfo();
+                                unturnedEconInfo.name = binaryReader.ReadString();
+                                unturnedEconInfo.display_type = binaryReader.ReadString();
+                                unturnedEconInfo.description = binaryReader.ReadString();
+                                unturnedEconInfo.name_color = binaryReader.ReadString();
+                                unturnedEconInfo.itemdefid = binaryReader.ReadInt32();
+                                unturnedEconInfo.marketable = binaryReader.ReadBoolean();
+                                unturnedEconInfo.scraps = binaryReader.ReadInt32();
+                                unturnedEconInfo.target_game_asset_guid = new Guid(binaryReader.ReadBytes(16));
+                                unturnedEconInfo.item_skin = binaryReader.ReadInt32();
+                                unturnedEconInfo.item_effect = binaryReader.ReadInt32();
+                                unturnedEconInfo.quality = (UnturnedEconInfo.EQuality)binaryReader.ReadInt32();
+                                unturnedEconInfo.econ_type = binaryReader.ReadInt32();
+                                EconInfo.Add(unturnedEconInfo.itemdefid, unturnedEconInfo);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                UnturnedLog.exception(e, "Caught exception loading EconInfo.bin:");
+            }
         }
     }
 
@@ -289,5 +333,22 @@ namespace MCustomCosmetics
                 if (!MCustomCosmetics.Instance.Configuration.Instance.AllowedCosmeticTypes.Pants) pantsItem = 0;
             }
         }
+        [HarmonyPatch(typeof(SDG.Provider.TempSteamworksEconomy))]
+        [HarmonyPatch(MethodType.Constructor)]
+        [HarmonyPatch(new Type[] { typeof(SDG.SteamworksProvider.SteamworksAppInfo) })] // Specify constructor with SteamworksAppInfo parameter
+        public static class TempSteamworksEconomyConstructorPatch
+        {
+            // This is called after the constructor executes
+            public static void Postfix(SDG.Provider.TempSteamworksEconomy __instance)
+            {
+                // Access the econInfo dictionary from the instance
+                var econInfoField = AccessTools.Field(typeof(SDG.Provider.TempSteamworksEconomy), "econInfo");
+                var econInfo = (Dictionary<int, UnturnedEconInfo>)econInfoField.GetValue(__instance);
+
+                // Now you can use the econInfo dictionary as needed
+                MCustomCosmetics.EconInfo = econInfo;
+            }
+        }
+
     }
 }

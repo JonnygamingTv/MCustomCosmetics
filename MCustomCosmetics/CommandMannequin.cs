@@ -58,10 +58,8 @@ namespace MCustomCosmetics
                         return;
                     }
                     var search = command[0];
-                    var econInfoField = typeof(SDG.Provider.TempSteamworksEconomy).GetField("econInfo", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic);
-                    var econInfos = econInfoField.GetValue(null) as Dictionary<int, UnturnedEconInfo>;
                     UnturnedEconInfo cosmetic;
-                    if (int.TryParse(search, out int searchId)) econInfos.TryGetValue(searchId, out cosmetic); else cosmetic = econInfos.Values.FirstOrDefault(x => x.name.ToLower().Contains(search.ToLower()));
+                    if (int.TryParse(search, out int searchId)) MCustomCosmetics.EconInfo.TryGetValue(searchId, out cosmetic); else cosmetic = MCustomCosmetics.EconInfo.Values.FirstOrDefault(x => x.name.ToLower().Contains(search.ToLower()));
                     if (cosmetic == null)
                     {
                         UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("cos_not_found",search), color);
