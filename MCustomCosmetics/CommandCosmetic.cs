@@ -35,7 +35,7 @@ namespace MCustomCosmetics
             if (command[0].ToLower() == "mythics" || command[0].ToLower() == "m")
             {
                 string[] mythicList = { };
-                foreach(var x in MCustomCosmetics.Instance.mythics)
+                foreach (var x in MCustomCosmetics.Instance.mythics)
                 {
                     mythicList[mythicList.Length] = x.Key;
                 }
@@ -62,7 +62,7 @@ namespace MCustomCosmetics
                         } }
                     },
 
-                    
+
                 };
             }
             if (!MCustomCosmetics.Instance.pData.data[(ulong)p.CSteamID].Outfits.ContainsKey(MCustomCosmetics.Instance.pData.data[(ulong)p.CSteamID].SelectedFit))
@@ -72,7 +72,16 @@ namespace MCustomCosmetics
             }
             var search = command[0];
             var econInfoField = typeof(SDG.Provider.TempSteamworksEconomy).GetField("econInfo", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic);
-            var econInfos = econInfoField.GetValue(null) as Dictionary<int, UnturnedEconInfo>;
+            if (econInfoField == null) {
+                UnturnedChat.Say(caller, "There was a problem fetching information.");
+                return; 
+            }
+            Dictionary<int, UnturnedEconInfo> econInfos = econInfoField.GetValue(null) as Dictionary<int, UnturnedEconInfo>;
+            if (econInfos == null)
+            {
+                UnturnedChat.Say(caller, "There was a problem getting dictionary.");
+                return;
+            }
             UnturnedEconInfo cosmetic;
             if (int.TryParse(search, out int searchId)) econInfos.TryGetValue(searchId, out cosmetic); else cosmetic = econInfos.Values.FirstOrDefault(x => x.name.ToLower().Contains(search.ToLower()));
 
