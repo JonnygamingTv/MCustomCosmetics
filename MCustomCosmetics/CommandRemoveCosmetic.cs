@@ -35,13 +35,13 @@ namespace MCustomCosmetics
             }
             if (!MCustomCosmetics.Instance.pData.data.ContainsKey((ulong)p.CSteamID))
             {
-                UnturnedChat.Say(caller, "You don't have any cosmetics set!", color);
+                UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("no_cos_set"), color);
                 return;
 
             }
             if (!MCustomCosmetics.Instance.pData.data[(ulong)p.CSteamID].Outfits.ContainsKey(MCustomCosmetics.Instance.pData.data[(ulong)p.CSteamID].SelectedFit))
             {
-                UnturnedChat.Say(caller, "You do not have a selected outfit! Select one with /outfit", color);
+                UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("no_sel_outfit"), color);
                 return;
             }
             switch (command[0].ToLower())
@@ -86,17 +86,17 @@ namespace MCustomCosmetics
                     if (int.TryParse(search, out int searchId)) econInfos.TryGetValue(searchId, out cosmetic); else cosmetic = econInfos.Values.FirstOrDefault(x => x.name.ToLower().Contains(search.ToLower()));
                     if (cosmetic == null)
                     {
-                        UnturnedChat.Say(caller, "Cosmetic id " + search + " not found!", color);
+                        UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("cos_not_found", search), color);
                         return;
                     }
                     if (MCustomCosmetics.Instance.pData.data[(ulong)p.CSteamID].Outfits[MCustomCosmetics.Instance.pData.data[(ulong)p.CSteamID].SelectedFit].skins.ContainsKey(cosmetic.itemdefid))
                     {
-                        UnturnedChat.Say(caller, "Removed " + cosmetic.name, color);
+                        UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("delete_outfit", cosmetic.name), color);
                         MCustomCosmetics.Instance.pData.data[(ulong)p.CSteamID].Outfits[MCustomCosmetics.Instance.pData.data[(ulong)p.CSteamID].SelectedFit].skins.Remove(cosmetic.itemdefid);
                     }
                     else
                     {
-                        UnturnedChat.Say(caller, "You do not have " + cosmetic.name + " equipped, or it does not exist.", color);
+                        UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("not_equipped_notexist", cosmetic.name), color);
                     }
                     break;
             }

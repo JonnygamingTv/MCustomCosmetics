@@ -38,13 +38,13 @@ namespace MCustomCosmetics
             UnturnedPlayer p = caller as UnturnedPlayer;
             if (!p.IsInVehicle)
             {
-                UnturnedChat.Say(caller, "You are not in a vehicle!", color);
+                UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("no_vehicle"), color);
                 return;
             }
             var vehicle = p.CurrentVehicle;
             if (!vehicle.isLocked || vehicle.lockedOwner != p.CSteamID)
             {
-                UnturnedChat.Say(caller, "This is not your vehicle! Please lock it first.", color);
+                UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("wrong_vehicle"), color);
                 return;
             }
             ushort skinId = 0;
@@ -53,7 +53,7 @@ namespace MCustomCosmetics
             var cosmetic = Util.GetCosmetic(command[0]);
             if (cosmetic == null)
             {
-                UnturnedChat.Say(caller, $"Cosmetic id {command[0]} not found!", color);
+                UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("cos_not_found", command[0]), color);
                 return;
             }
             skinId = Provider.provider.economyService.getInventorySkinID(cosmetic.itemdefid);
@@ -75,10 +75,10 @@ namespace MCustomCosmetics
             VehicleManager.ReceiveVehicleSkin(vehicle.instanceID, skinId, mythicId);
             // i cannot believe this works
             var cl = ClientStaticMethod<uint, ushort, ushort>.Get(new ClientStaticMethod<uint, ushort, ushort>.ReceiveDelegate(VehicleManager.ReceiveVehicleSkin));
-            object[] pars = new object[] { ENetReliability.Reliable, Provider.EnumerateClients_Remote(), vehicle.instanceID, skinId, mythicId };
+            object[] pars = new object[] { ENetReliability.Reliable, Provider.GatherRemoteClientConnections().AsEnumerable(), vehicle.instanceID, skinId, mythicId };
             cl.GetType().GetTypeInfo().GetDeclaredMethod("InvokeAndLoopback").Invoke(cl, pars);
             //source for this: VehicleManager.SendVehicleSkin.InvokeAndLoopback(ENetReliability.Reliable, Provider.EnumerateClients_Remote(), vehicle.instanceID, skinId, mythicId);
-            UnturnedChat.Say(caller, $"Set your vehicle skin to {cosmetic.name}", color);
+            UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("set_vehicle_skin", cosmetic.name), color);
         }
     }
 }

@@ -29,17 +29,17 @@ namespace MCustomCosmetics
             var color = MCustomCosmetics.Instance.MessageColor;
             if (command.Length < 1)
             {
-                UnturnedChat.Say(caller, "Invalid syntax! /cos <itemdefid/mythics> (mythical effect)", color);
+                UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("cos_invalid_syntax"), color);
                 return;
             }
             if (command[0].ToLower() == "mythics" || command[0].ToLower() == "m")
             {
-                string mythicList = "Mythical effects available: ";
+                string[] mythicList = { };
                 foreach(var x in MCustomCosmetics.Instance.mythics)
                 {
-                    mythicList += x.Key + ", ";
+                    mythicList[mythicList.Length] = x.Key;
                 }
-                UnturnedChat.Say(caller, mythicList);
+                UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("mythicals_available", String.Join(", ", mythicList)));
                 return;
             }
             UnturnedPlayer p = caller as UnturnedPlayer;
@@ -67,7 +67,7 @@ namespace MCustomCosmetics
             }
             if (!MCustomCosmetics.Instance.pData.data[(ulong)p.CSteamID].Outfits.ContainsKey(MCustomCosmetics.Instance.pData.data[(ulong)p.CSteamID].SelectedFit))
             {
-                UnturnedChat.Say(caller, "You do not have a selected outfit! Select one with /outfit", color);
+                UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("no_sel_outfit"), color);
                 return;
             }
             var search = command[0];
@@ -78,7 +78,7 @@ namespace MCustomCosmetics
 
             if (cosmetic == null)
             {
-                UnturnedChat.Say(caller, $"Cosmetic id {search} not found!", color);
+                UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("cos_not_found", search), color);
                 return;
             }
             string mythic = "";
@@ -90,7 +90,7 @@ namespace MCustomCosmetics
                 }
                 else
                 {
-                    UnturnedChat.Say(caller, "Mythic not found! Use /cos mythics", color);
+                    UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("mythic_not_found"), color);
                     return;
                 }
             }
@@ -98,11 +98,11 @@ namespace MCustomCosmetics
             if (type.Contains("skin")) allowMythic = true;
             if (allowMythic && command.Length >= 2)
             {
-                UnturnedChat.Say(caller, "Added cosmetic " + cosmetic.name + " with mythic effect " + command[1], color);
+                UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("cos_mythic_success", cosmetic.name, command[1]), color);
             }
             else
             {
-                UnturnedChat.Say(caller, "Added cosmetic " + cosmetic.name, color);
+                UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("cos_added", cosmetic.name), color);
             }
             if (p.HasPermission("CosmeticsAllowSaving")) MCustomCosmetics.Instance.pData.data[(ulong)p.CSteamID].AllowSaving = true;
             else MCustomCosmetics.Instance.pData.data[(ulong)p.CSteamID].AllowSaving = false;

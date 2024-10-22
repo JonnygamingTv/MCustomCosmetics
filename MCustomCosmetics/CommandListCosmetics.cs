@@ -32,7 +32,7 @@ namespace MCustomCosmetics
             {
                 if (!MCustomCosmetics.Instance.pData.data[playerId].Outfits.ContainsKey(MCustomCosmetics.Instance.pData.data[playerId].SelectedFit))
                 {
-                    UnturnedChat.Say(caller, "You do not have a selected outfit! Select one with /outfit", color);
+                    UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("no_sel_outfit"), color);
                     return;
                 }
                 var pData = MCustomCosmetics.Instance.pData.data[playerId];
@@ -70,7 +70,7 @@ namespace MCustomCosmetics
             }
             else
             {
-                UnturnedChat.Say(caller, "You do not have any cosmetics equipped!", color);
+                UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("no_cos_equipped"), color);
             }
         }
 

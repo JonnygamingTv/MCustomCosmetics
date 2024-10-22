@@ -29,7 +29,7 @@ namespace MCustomCosmetics
             UnturnedPlayer p = caller as UnturnedPlayer;
             if (!MCustomCosmetics.Instance.pData.data.ContainsKey((ulong)p.CSteamID))
             {
-                UnturnedChat.Say(caller, "You do not have any cosmetics set! Use /cosmetic first", color);
+                UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("no_cos_set"), color);
                 return;
             }
             string wrongSyntax = "";
@@ -46,13 +46,13 @@ namespace MCustomCosmetics
             }
             if (MCustomCosmetics.Instance.pData.data[(ulong)p.CSteamID].SelectedFit == "none")
             {
-                UnturnedChat.Say(caller, "You do not have a selected outfit!", color);
+                UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("no_sel_outfit"), color);
                 return;
             }
             if (command[0].ToLower() == "none")
             {
                 MCustomCosmetics.Instance.pData.data[(ulong)p.CSteamID].Outfits[MCustomCosmetics.Instance.pData.data[(ulong)p.CSteamID].SelectedFit].Hair = null;
-                UnturnedChat.Say(caller, $"Removed the hair on outfit {MCustomCosmetics.Instance.pData.data[(ulong)p.CSteamID].SelectedFit}", color);
+                UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("remove_hair", MCustomCosmetics.Instance.pData.data[(ulong)p.CSteamID].SelectedFit), color);
                 MCustomCosmetics.Instance.pData.CommitToFile();
                 return;
             }
@@ -67,7 +67,7 @@ namespace MCustomCosmetics
                 if (g > 255) g = 255;
                 if (b > 255) b = 255;
                 MCustomCosmetics.Instance.pData.data[(ulong)p.CSteamID].Outfits[MCustomCosmetics.Instance.pData.data[(ulong)p.CSteamID].SelectedFit].Hair = new HairColor(r, g, b);
-                UnturnedChat.Say(caller, "Set your hair color!", color);
+                UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("set_hair"), color);
                 MCustomCosmetics.Instance.pData.CommitToFile();
             }
             else

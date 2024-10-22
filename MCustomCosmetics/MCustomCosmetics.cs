@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using Rocket.API.Collections;
 using Rocket.Core.Assets;
 using Rocket.Core.Plugins;
 using Rocket.Unturned;
@@ -23,6 +24,47 @@ namespace MCustomCosmetics
         public PlayerData pData;
         public Dictionary<ulong, bool> globalCos;
         public UnityEngine.Color MessageColor { get; set; }
+        public override TranslationList DefaultTranslations => new TranslationList()
+        {
+            {"set_vehicle_skin", "Set your vehicle skin to {0}"},
+            {"cos_global_off","You have toggled off global cosmetics. Relog to see the changes"},
+            {"cos_global_on","You have toggled on global cosmetics. Relog to see the changes"},
+            {"cos_invalid_syntax", "Invalid syntax! /cos <itemdefid/mythics> (mythical effect)"},
+            {"cos_not_found", "Cosmetic id {0} not found!"},
+            {"mythicals_available", "Mythical effects available: {0}"},
+            {"mythic_not_found", "Mythic not found! Use /cos mythics"},
+            {"cos_mythic_success", "Added cosmetic {0} with mythic effect {1}" },
+            {"cos_added", "Added cosmetic {0}"},
+            {"no_cos_set", "You do not have any cosmetics set! Use /cosmetic first"},
+            {"no_cos_equipped","You do not have any cosmetics equipped"},
+            {"not_equipped_notexist","You do not have {0} equipped, or it does not exist."},
+            {"no_sel_outfit", "You do not have a selected outfit! Select one with /outfit"},
+            {"remove_hair","Removed the hair on outfit {0}"},
+            {"set_hair","Set your hair color!"},
+            {"set_item","Set item id {0} / skin id {1} / mythic {2}"},
+            {"invalid_item","That is not a valid item"},
+            {"not_for_mannequin", "{0} cannot be applied to a mannequin!"},
+            {"mannequin_not_owner","You are not the owner of this mannequin!"},
+            {"applied_mannequin","Applied {0} to the mannequin"},
+            {"clear_mannequin","Please remove any items from the mannequin first!"},
+            {"not_a_mannequin","That is not a mannequin!"},
+            {"not_looking_at_mannequin","You are not looking at a mannequin!"},
+            {"not_owner","You are not the owner of this storage!"},
+            {"not_storage","That is not a storage!"},
+            {"no_barricade","Could not find a barricade"},
+            {"remove_items","Please remove any items from the storage first!"},
+            {"reformat_outfit", "Please reformat your outfit name. It must be alphanumeric and at least 1 character long"},
+            {"outfit_limit","You cannot create any more outfits! Please remove one first."},
+            {"outfit_created", "Created and equipped outfit: {0}"},
+            {"rename_outfit","/outfit rename <outfit you own> <new name>"},
+            {"selected_outfit","Selected outfit {0}. Relog to see changes"},
+            {"invalid_outfit","That is not a valid outfit you own!"},
+            {"removed_outfit","Removed your outfit"},
+            {"delete_outfit","Removed {0}"},
+            {"cloned_outfit","Cloned outfit {0} named {0}2"},
+            {"no_vehicle","You are not in a vehicle!"},
+            {"wrong_vehicle","This is not your vehicle! Please lock it first."}
+        };
         protected override void Load()
         {
             Instance = this;

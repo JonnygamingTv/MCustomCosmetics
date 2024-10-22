@@ -34,12 +34,12 @@ namespace MCustomCosmetics
             if (MCustomCosmetics.Instance.globalCos[playerId])
             {
                 MCustomCosmetics.Instance.globalCos[playerId] = false;
-                UnturnedChat.Say(caller, "You have toggled off global cosmetics. Relog to see the changes", color);
+                UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("cos_global_off"), color);
             }
             else
             {
                 MCustomCosmetics.Instance.globalCos[playerId] = true;
-                UnturnedChat.Say(caller, "You have toggled on global cosmetics. Relog to see the changes", color);
+                UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("cos_global_on"), color);
             }
         }
     }

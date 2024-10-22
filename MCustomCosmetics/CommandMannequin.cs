@@ -42,19 +42,19 @@ namespace MCustomCosmetics
                 var bar = BarricadeManager.FindBarricadeByRootTransform(hit.collider.transform.root);
                 if (bar.GetServersideData().owner != (ulong)p.CSteamID)
                 {
-                    UnturnedChat.Say(caller, "You are not the owner of this mannequin!", color);
+                    UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("mannequin_not_owner"), color);
                     return;
                 }
                 if (bar.interactable == null)
                 {
-                    UnturnedChat.Say(caller, "That is not a mannequin!", color);
+                    UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("not_a_mannequin"), color);
                     return;
                 }
                 if (bar.interactable is InteractableMannequin man)
                 {
                     if (man.hat != 0 || man.backpack != 0 || man.glasses != 0 || man.mask != 0 || man.shirt != 0 || man.vest != 0 || man.pants != 0)
                     {
-                        UnturnedChat.Say(caller, "Please remove any items from the mannequin first!", color);
+                        UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("clear_mannequin"), color);
                         return;
                     }
                     var search = command[0];
@@ -64,12 +64,12 @@ namespace MCustomCosmetics
                     if (int.TryParse(search, out int searchId)) econInfos.TryGetValue(searchId, out cosmetic); else cosmetic = econInfos.Values.FirstOrDefault(x => x.name.ToLower().Contains(search.ToLower()));
                     if (cosmetic == null)
                     {
-                        UnturnedChat.Say(caller, "Cosmetic id " + search + " not found!", color);
+                        UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("cos_not_found",search), color);
                         return;
                     }
                     if (cosmetic.display_type.Contains("skin"))
                     {
-                        UnturnedChat.Say(caller, $"{cosmetic.name} cannot be applied to a mannequin!", color);
+                        UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("not_for_mannequin",cosmetic.name), color);
                         return;
                     }
                     var backpack = man.visualBackpack;
@@ -116,17 +116,17 @@ namespace MCustomCosmetics
                     BarricadeManager.tryGetInfo(hit.collider.transform.root, out byte xx, out byte y, out ushort plant, out ushort index, out BarricadeRegion region);
                     BarricadeManager.dropNonPlantedBarricade(bar.GetServersideData().barricade, newpos, hit.collider.transform.root.rotation, bar.GetServersideData().owner, bar.GetServersideData().group);
                     BarricadeManager.destroyBarricade(bar, xx, y, plant);
-                    UnturnedChat.Say(caller, $"Applied {cosmetic.name} to the mannequin", color);
+                    UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("applied_mannequin", cosmetic.name), color);
                 }
                 else
                 {
-                    UnturnedChat.Say(caller, "That is not a mannequin!", color);
+                    UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("not_a_mannequin"), color);
                     return;
                 }
             }
             else
             {
-                UnturnedChat.Say(caller, "You are not looking at a mannequin!", color);
+                UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("not_looking_at_mannequin"), color);
             }
         }
     }
