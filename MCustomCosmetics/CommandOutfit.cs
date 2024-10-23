@@ -35,7 +35,7 @@ namespace MCustomCosmetics
             }
             if (command.Length < 1)
             {
-                UnturnedChat.Say(caller, $"Selected:{MCustomCosmetics.Instance.pData.data[(ulong)p.CSteamID].SelectedFit} : {Syntax}", color);
+                UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("current_cos", MCustomCosmetics.Instance.pData.data[(ulong)p.CSteamID].SelectedFit, Syntax), color);
                 return;
             }
             List<string> fits = new List<string>();
@@ -45,7 +45,7 @@ namespace MCustomCosmetics
             }
             if (command[0].ToLower() == "list")
             {
-                UnturnedChat.Say(caller, $"Available outfits: None, {string.Join(", ", fits)}", color);
+                UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("list_outfits", string.Join(", ", fits)), color);
                 return;
             }
             else if (command.Length < 2)
@@ -168,7 +168,7 @@ namespace MCustomCosmetics
                     {
                         MCustomCosmetics.Instance.pData.data[(ulong)p.CSteamID].SelectedFit = command[2];
                     }
-                    UnturnedChat.Say(caller, $"Renamed outfit {command[1]} to {command[2]}", color);
+                    UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("renamed_outfit", command[1], command[2]), color);
                     break;
                 default:
                     UnturnedChat.Say(caller, Syntax, color);

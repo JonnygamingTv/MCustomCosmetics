@@ -30,7 +30,7 @@ namespace MCustomCosmetics
             UnturnedPlayer p = caller as UnturnedPlayer;
             if (command.Length < 1)
             {
-                UnturnedChat.Say(caller, $"No arguments given! {Syntax}", color);
+                UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("no_args", Syntax), color);
                 return;
             }
             if (!MCustomCosmetics.Instance.pData.data.ContainsKey((ulong)p.CSteamID))
@@ -48,35 +48,35 @@ namespace MCustomCosmetics
             {
                 case "all":
                     MCustomCosmetics.Instance.pData.data.Remove((ulong)p.CSteamID);
-                    UnturnedChat.Say(caller, "Removed all custom cosmetics", color);
+                    UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("cos_removeall"), color);
                     break;
                 case "hat":
                     MCustomCosmetics.Instance.pData.data[(ulong)p.CSteamID].Outfits[MCustomCosmetics.Instance.pData.data[(ulong)p.CSteamID].SelectedFit].Hat = 0;
-                    UnturnedChat.Say(caller, "Removed your custom hat", color);
+                    UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("cos_removehat"), color);
                     break;
                 case "mask":
                     MCustomCosmetics.Instance.pData.data[(ulong)p.CSteamID].Outfits[MCustomCosmetics.Instance.pData.data[(ulong)p.CSteamID].SelectedFit].Mask = 0;
-                    UnturnedChat.Say(caller, "Removed your custom mask", color);
+                    UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("cos_removemask"), color);
                     break;
                 case "glasses":
                     MCustomCosmetics.Instance.pData.data[(ulong)p.CSteamID].Outfits[MCustomCosmetics.Instance.pData.data[(ulong)p.CSteamID].SelectedFit].Glasses = 0;
-                    UnturnedChat.Say(caller, "Removed your custom glasses", color);
+                    UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("cos_removeglasses"), color);
                     break;
                 case "backpack":
                     MCustomCosmetics.Instance.pData.data[(ulong)p.CSteamID].Outfits[MCustomCosmetics.Instance.pData.data[(ulong)p.CSteamID].SelectedFit].Backpack = 0;
-                    UnturnedChat.Say(caller, "Removed your custom backpack", color);
+                    UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("cos_removebackpack"), color);
                     break;
                 case "shirt":
                     MCustomCosmetics.Instance.pData.data[(ulong)p.CSteamID].Outfits[MCustomCosmetics.Instance.pData.data[(ulong)p.CSteamID].SelectedFit].Shirt = 0;
-                    UnturnedChat.Say(caller, "Removed your custom shirt", color);
+                    UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("cos_removeshirt"), color);
                     break;
                 case "vest":
                     MCustomCosmetics.Instance.pData.data[(ulong)p.CSteamID].Outfits[MCustomCosmetics.Instance.pData.data[(ulong)p.CSteamID].SelectedFit].Vest = 0;
-                    UnturnedChat.Say(caller, "Removed your custom vest", color);
+                    UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("cos_removevest"), color);
                     break;
                 case "pants":
                     MCustomCosmetics.Instance.pData.data[(ulong)p.CSteamID].Outfits[MCustomCosmetics.Instance.pData.data[(ulong)p.CSteamID].SelectedFit].Pants = 0;
-                    UnturnedChat.Say(caller, "Removed your custom pants", color);
+                    UnturnedChat.Say(caller, MCustomCosmetics.Instance.Translate("cos_removepants"), color);
                     break;
                 default:
                     var search = command[0];

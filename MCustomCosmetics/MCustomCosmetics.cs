@@ -37,6 +37,15 @@ namespace MCustomCosmetics
             {"mythic_not_found", "Mythic not found! Use /cos mythics"},
             {"cos_mythic_success", "Added cosmetic {0} with mythic effect {1}" },
             {"cos_added", "Added cosmetic {0}"},
+            {"current_cos","Selected: {0} : {1}"},
+            {"cos_removeall", "Removed all custom cosmetics"},
+            {"cos_removehat","Removed your custom hat"},
+            {"cos_removemask","Removed your custom mask"},
+            {"cos_removeglasses","Removed your custom glasses"},
+            {"cos_removebackpack","Removed your custom backpack"},
+            {"cos_removeshirt","Removed your custom shirt"},
+            {"cos_removevest","Removed your custom vest"},
+            {"cos_removepants","Removed your custom pants"},
             {"no_cos_set", "You do not have any cosmetics set! Use /cosmetic first"},
             {"no_cos_equipped","You do not have any cosmetics equipped"},
             {"not_equipped_notexist","You do not have {0} equipped, or it does not exist."},
@@ -64,8 +73,11 @@ namespace MCustomCosmetics
             {"removed_outfit","Removed your outfit"},
             {"delete_outfit","Removed {0}"},
             {"cloned_outfit","Cloned outfit {0} named {0}2"},
+            {"renamed_outfit","Renamed outfit {0} to {1}"},
+            {"list_outfits","Available outfits: None, {0}"},
             {"no_vehicle","You are not in a vehicle!"},
-            {"wrong_vehicle","This is not your vehicle! Please lock it first."}
+            {"wrong_vehicle","This is not your vehicle! Please lock it first."},
+            {"no_args","No arguments given! {0}"}
         };
         protected override void Load()
         {
