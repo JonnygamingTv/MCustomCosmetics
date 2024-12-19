@@ -163,7 +163,7 @@ namespace MCustomCosmetics
                     }
                     var fit = MCustomCosmetics.Instance.pData.data[(ulong)p.CSteamID].Outfits[command[1]];
                     MCustomCosmetics.Instance.pData.data[(ulong)p.CSteamID].Outfits.Remove(command[1]);
-                    MCustomCosmetics.Instance.pData.data[(ulong)p.CSteamID].Outfits.Add(command[2], fit);
+                    MCustomCosmetics.Instance.pData.data[(ulong)p.CSteamID].Outfits[command[2]] = fit;
                     if (MCustomCosmetics.Instance.pData.data[(ulong)p.CSteamID].SelectedFit == command[1])
                     {
                         MCustomCosmetics.Instance.pData.data[(ulong)p.CSteamID].SelectedFit = command[2];
