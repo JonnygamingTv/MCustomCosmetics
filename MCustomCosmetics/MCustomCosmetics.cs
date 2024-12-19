@@ -176,7 +176,7 @@ namespace MCustomCosmetics
                     {
                         using (BinaryReader binaryReader = new BinaryReader(fileStream))
                         {
-                            binaryReader.ReadInt32();
+                            int num0 = binaryReader.ReadInt32();
                             int num = binaryReader.ReadInt32();
                             for (int i = 0; i < num; i++)
                             {
@@ -193,6 +193,10 @@ namespace MCustomCosmetics
                                 unturnedEconInfo.item_effect = binaryReader.ReadInt32();
                                 unturnedEconInfo.quality = (UnturnedEconInfo.EQuality)binaryReader.ReadInt32();
                                 unturnedEconInfo.econ_type = binaryReader.ReadInt32();
+                                if (num0 >= 2)
+                                {
+                                    unturnedEconInfo.creationTimeUtc = DateTime.FromBinary(binaryReader.ReadInt64());
+                                }
                                 EconInfo[unturnedEconInfo.itemdefid] = unturnedEconInfo;
                             }
                         }
