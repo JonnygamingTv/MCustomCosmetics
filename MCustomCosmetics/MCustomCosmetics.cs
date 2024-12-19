@@ -193,7 +193,7 @@ namespace MCustomCosmetics
                                 unturnedEconInfo.item_effect = binaryReader.ReadInt32();
                                 unturnedEconInfo.quality = (UnturnedEconInfo.EQuality)binaryReader.ReadInt32();
                                 unturnedEconInfo.econ_type = binaryReader.ReadInt32();
-                                EconInfo.Add(unturnedEconInfo.itemdefid, unturnedEconInfo);
+                                EconInfo[unturnedEconInfo.itemdefid] = unturnedEconInfo;
                             }
                         }
                     }
